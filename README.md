@@ -12,8 +12,8 @@ All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK
 1. [DECODE: PVR --> IMG](#1-decode-pvr----img)
 2. [DECODE OPTIONS](#2-decode-options----img)
 3. [ENCODE: IMG --> PVR](#3-encode-img---pvr)
-5. [ENCODE OPTIONS](#4-decode-options----img)
-6. [EXAMPLES](#5-examples)
+4. [ENCODE OPTIONS](#4-decode-options----img)
+5. [EXAMPLES](#5-examples)
 
 ---
 
