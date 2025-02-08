@@ -2,16 +2,26 @@
   <img src="https://github.com/user-attachments/assets/187425e7-e73a-4b8c-801b-ee2126db0e30">
 </p>
 
-
-
-
-
 # PyPVR - Unofficial PVR Image Tool
 
 `PyPVR` is a modern Python tool for encoding / decoding PowerVR2 images used by `SEGA Naomi` and `SEGA Dreamcast`.
 All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK are supported.
 
-Created to easily modify DC game images without resorting to licensed programs from SDKs, `PyPVR` can be also used as python module for decoding and encoding PVR data as buffer too!
+Created to easily modify DC game images without resorting to licensed programs from SDKs, just extract your PVRs with `-log` option, edit images and drag `pvr_log.txt` on `PyPVR`. As simple as that!
+
+## Main Features
+- Pyhon 3.9.12+, OS free!
+- Portable Windows application
+- Drag and drop interface for both `encode` / `decode` / `binary extraction` / `reimport`.
+![extract drag](https://github.com/user-attachments/assets/614339a3-bd05-4587-b9e6-b896fba87513)
+- Complete command line tool
+- 2 VQ quality algorithms to provide a flexible solution according to your needs.
+![PYPVR_VQMM](https://github.com/user-attachments/assets/98b84dbf-0e56-4366-9277-80a6223647e4)
+- Palette color index maintained during conversion
+- Automated CRC32 encode skip if .png file is the same
+- Simple and editable `.txt` log file for automated encoding!
+- YUV420 encoding, Bump map supported!
+
 
 ## ♥ Support ♥
 - https://ko-fi.com/vincentnl
@@ -23,6 +33,7 @@ Created to easily modify DC game images without resorting to licensed programs f
  - Egregiousguy for YUV420 decoding 
  - Kion for SmallVQ mipmaps data
  - MetalliC for hardware knowledge
+ - My daughter for logo design! ♥
 
 Testing:
  - Esppiral
