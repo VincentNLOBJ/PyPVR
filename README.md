@@ -7,7 +7,10 @@
 `PyPVR` is a modern Python tool for encoding / decoding PowerVR2 images used by `SEGA Naomi` and `SEGA Dreamcast`.
 All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK are supported.
 
-Created to easily modify DC game images without resorting to licensed programs from SDKs, just extract your PVRs with `-log` option, edit images and drag `pvr_log.txt` on `PyPVR`. As simple as that!
+Created to easily modify DC game images without resorting to licensed programs from SDKs.
+1. Convert `.PVR` to `.png` by drag & drop.
+2. Edit images
+3. Feed `PyPVR` with `pvr_log.txt` and it'll take care of encoding all extracted images. As simple as that!
 
 ## Main Features
 - Pyhon 3.9.12+, OS free!
