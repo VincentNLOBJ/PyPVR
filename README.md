@@ -8,7 +8,7 @@
 `PyPVR` is a modern Python tool for encoding / decoding PowerVR2 images used by `SEGA Naomi` and `SEGA Dreamcast`.
 All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK are supported.
 
-Created to easily modify DC game images without resorting to licensed programs from SDKs, `PyPVR` can be also used as python module for decoding and encoding pvr data as buffer too!
+Created to easily modify DC game images without resorting to licensed programs from SDKs, `PyPVR` can be also used as python module for decoding and encoding PVR data as buffer too!
 
 ## ♥ Support ♥
 - https://ko-fi.com/vincentnl
@@ -44,11 +44,11 @@ Testing:
 ---
 
 ## 1. DECODE: PVR --> IMG
-Convert one or more .PVR files and save them as .PNG or BMP.
-.PVP palette will be converted to Adobe Color Table (ACT).
+Convert one or more `.PVR` files and save them as `.PNG` or `.BMP`.
+`.PVP` palette can be converted to Adobe Color Table `.ACT`
 
-**Note**  
-If a .PVP and .PVR file with the same name are present, the palette will be applied to the image.
+**Palette Note**  
+If a `.PVP` and `.PVR` file with the same name are present, the palette will be applied to the image.
 
 ### Usage:
 ```bash
@@ -71,7 +71,7 @@ pypvr.exe <infile1.PVR> -<options>
 ---
 
 ## 3. ENCODE: IMG --> PVR
-Encode an image to .PVR and .PVP if palettized.
+Encode an image to `.PVR` and `.PVP` if palettized.
 
 ### Usage:
 ```bash
@@ -138,38 +138,38 @@ pypvr.exe <infile> -<options>
 
 ### Convert PVR to Image
 #### Example 1
-Convert a PVR to default image format (.png):
+Convert a PVR to default image format `.png`:
 ```bash
 pypvr.exe "file1.PVR"
 ```
 
 #### Example 2
-Convert all .PVR files to images, save in `c:\images`, create log file for reimport:
+Convert all `.PVR` files to images, save in `c:\images`, create log file for reimport:
 ```bash
 pypvr.exe "*.pvr" -o "c:\images" -log
 ```
 
 #### Example 3
-Convert a PVR to image, Vertical flip, save in `c:\decoded` directory:
+Convert a `.PVR` to image, Vertical flip, save in `c:\decoded` directory:
 ```bash
 pypvr.exe "infile1.PVR" -png -flip -o "c:\decoded"
 ```
 
 ### Convert Image to PVR
 #### Example 1
-Convert image to PVR, default settings:
+Convert image to `.PVR`, default settings:
 ```bash
 pypvr.exe "test.png"
 ```
 
 #### Example 2
-Automatically re-encode all images back to PVR(s) as per `pvr_log.txt`:
+Automatically re-encode all images back to `.PVR` as per `pvr_log.txt`:
 ```bash
 pypvr.exe "c:\image_dir\pvr_log.txt"
 ```
 
 #### Example 3
-Convert all .png images to .PVR(s), save them to output folder `c:\pvr_dir`:
+Convert all `.png` images to `.PVR`, save them to output folder `c:\pvr_dir`:
 ```bash
 pypvr.exe "*.png" -o "c:\pvr_dir"
 ```
@@ -188,7 +188,7 @@ pypvr.exe "test.png" -565 -vq
 
 ### Binary Container Extraction
 #### Example 1
-Scan a binary file for PVR / PVP data:
+Scan a binary file for `.PVR` / `.PVP` data:
 ```bash
 pypvr.exe "unknown.DAT"
 ```
