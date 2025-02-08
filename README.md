@@ -15,7 +15,7 @@ Additionally, it can be used as python module for decoding and encoding pvr data
 - https://ko-fi.com/vincentnl
 - https://ko-fi.com/patreon.com/vincentnl
 
-## CREDITS
+## Credits
 
  - Tcaw for K-means idea leading to quality VQ encoding
  - Egregiousguy for YUV420 decoding 
