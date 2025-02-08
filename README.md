@@ -9,11 +9,11 @@
 All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK are supported.
 
 ## Table of Contents
-1. [DECODE: PVR --> IMG]([https://github.com/VincentNLOBJ/pypvr/tree/main?tab=readme-ov-file#1-decode-pvr----img])
-2. [Decode Options]([https://github.com/VincentNLOBJ/pypvr/edit/main/README.md#1-decode-pvr----img])
-3. [Encode: IMG --> PVR](#encode-img---pvr)
-5. [Encode Options](#encode-options)
-6. [Examples](#examples)
+1. [DECODE: PVR --> IMG](#1-decode-pvr----img)
+2. [DECODE OPTIONS](#2-decode-options----img)
+3. [ENCODE: IMG --> PVR](#3-encode-img---pvr)
+5. [ENCODE OPTIONS](#4-decode-options----img)
+6. [EXAMPLES](#5-examples)
 
 ---
 
