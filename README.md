@@ -45,6 +45,7 @@ Testing:
 
 ## 1. DECODE: PVR --> IMG
 Convert one or more `.PVR` files and save them as `.PNG` or `.BMP`.
+
 `.PVP` palette can be converted to Adobe Color Table `.ACT`
 
 **Palette Note**  
