@@ -28,7 +28,7 @@ Created to easily modify DC game images without resorting to licensed programs f
 
 ## ♥ Support ♥
 - https://ko-fi.com/vincentnl
-- https://ko-fi.com/patreon.com/vincentnl
+- https://patreon.com/vincentnl
 
 ## Credits
 
