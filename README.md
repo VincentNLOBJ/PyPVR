@@ -226,8 +226,14 @@ Reimport modified images and palettes back to container using log file:
 ```bash
 pypvr.exe "c:\myfolder\"pvr_log.txt"
 ```
+---
+
+
+
 # Developers Useage
-`PyPVR` can be used for batch Image --> `.PVR` / `.PVP` processing, by using a `.txt` file, or if used as Python import as buffer input/output.
+`PyPVR` can be used for batch images encoding, by creating a simple `pvr_log.txt` file, or as `bytesarray` input/output when called as Python import module.
+
+---
 
 ## Batch Encoding
 - `PyPVR` encoder accepts `.png`, `.gif`, `.bmp`, `.tga`, `.jpg`, `.tif` images.
@@ -248,21 +254,22 @@ IMAGE FILE : C:\Image3.png
 TARGET DIR : C:\PVR
 ENC PARAMS : -pal8 -1555 -nopvp
 ```
+---
 
 ## Python buffer
-Pypvr().Encode and Pypvr().Decode class, can be used with `bytesarray` as input / output.
+If used as module import, `PyPVR` can provide `bytesarray` as input / output with `-buffer` option.
 
 - Physical file as input, encode bytes array as buffer output:
 ```bash
-Pypvr().Encode(f' c:\filename.png -buffer').get_pvr_buffer()
+Pypvr().Encode('c:\filename.png -buffer').get_pvr_buffer()
 ```
 - PIL image object as input, encode bytes array as buffer output:
 ```bash
-Ppypvr().Encode('-buffer',image).get_pvr_buffer()
+Pypvr().Encode('-buffer',image).get_pvr_buffer()
 ```
 - Physical file's palette as input, convert to palette buffer output:
 ```bash
-Pypvr().Encode(f' c:\filename.png -buffer').get_pvp_buffer()
+Pypvr().Encode('c:\filename.png -buffer').get_pvp_buffer()
 ```
 - PIL Image object's palette as input, palette buffer output:
 ```bash
