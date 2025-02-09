@@ -9,6 +9,7 @@ All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK
 
 Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender-NaomiLib), `PyPVR` is now a standalone tool designed for beginners / experienced modders.<p></p>
 Click on [Drag & Drop](https://github.com/VincentNLOBJ/PyPVR/tree/main?tab=readme-ov-file#pypvr-drag--drop---quick-steps) or [Command Line](https://github.com/VincentNLOBJ/PyPVR/tree/main?tab=readme-ov-file#pypvr-command-line-tool---table-of-contents) for usage examples.
+`PyPVR` can be also used by developers willing to create PVR variations used by SEGA's SDK formats.
 
 ## Main Features
 - Pyhon 3.9.12+, OS free!  ( Modules: numpy, PIL, faiss )
@@ -223,4 +224,42 @@ pypvr.exe "unknown.DAT"
 Reimport modified images and palettes back to container using log file:
 ```bash
 pypvr.exe "c:\myfolder\"pvr_log.txt"
+```
+# PyPVR Developers Use
+
+## Encoder
+- `PyPVR` encoder accepts `.png`, `.gif`, `.bmp`, `.tga`, `.jpg`, `.tif` images.
+If you want to create your own build chain, make a text file called `pvr_log.txt` and feed it to `PyPVR`
+
+Example:
+
+```bash
+IMAGE FILE : C:\Image1.png
+TARGET DIR : C:\PVR
+ENC PARAMS : -vq -1555 -mm 
+---------------
+IMAGE FILE : C:\Image2.png
+TARGET DIR : C:\PVR
+ENC PARAMS : -pal8 -1555 -nopvp
+---------------
+IMAGE FILE : C:\Image3.png
+TARGET DIR : C:\PVR
+ENC PARAMS : -pal8 -1555 -nopvp
+```
+
+## Python buffer
+In case you want to decode / encode `.PVR` or `.PVP` as `bytesarray` buffer:
+
+- If you want to use a physical file as input, encode bytes array as PVR buffer output:
+```bash
+Pypvr().Encode(f' c:\filename.png -buffer').get_pvr_buffer()
+```
+- If your PIL image object is already stored, encode bytes array as PVR buffer output:
+```bash
+Ppypvr().Encode('-buffer',image).get_pvr_buffer()
+```
+- If you want to take the `.PVP` as buffer that's supported too:
+```bash
+Pypvr().Encode(f' c:\filename.png -buffer').get_pvp_buffer()
+Pypvr().Encode('-buffer',image).get_pvp_buffer()
 ```
