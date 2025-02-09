@@ -7,23 +7,17 @@
 `PyPVR` is a modern Python tool for encoding / decoding PowerVR2 images used by `SEGA Naomi` and `SEGA Dreamcast`.
 All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK are supported.
 
-Created to easily modify DC game images without resorting to licensed programs from SDKs.
-1. Convert `.PVR` to `.png` by drag & drop.
-2. Edit images
-3. Feed `PyPVR` with `pvr_log.txt` and it'll take care of encoding all extracted images. As simple as that!
+Originally written in pure Python 3.9 for Blender [NaomiLib addon](https://github.com/NaomiMod/blender-NaomiLib), it now includes all the features casual and experienced modders need, without relying on the old licensed SDK tools.
 
 ## Main Features
 - Pyhon 3.9.12+, OS free!
 - Portable Windows application
-- Drag and drop interface for both `encode` / `decode` / `binary extraction` / `reimport`.
-![extract drag](https://github.com/user-attachments/assets/614339a3-bd05-4587-b9e6-b896fba87513)
-- Complete command line tool
+- Drag & drop interface
+- Command line tool
+- Binary container `.afs`,`.bin`,`.dat`,`.pvm`,`.tex` extract / reimport `.PVR` / `.PVP`.
 - 2 VQ quality algorithms to provide a flexible solution according to your needs.
-![PYPVR_VQMM](https://github.com/user-attachments/assets/98b84dbf-0e56-4366-9277-80a6223647e4)
-- Palette color index maintained during conversion
-- Automated CRC32 encode skip if .png file is the same
-- Simple and editable `.txt` log file for automated encoding!
-- YUV420 encoding, Bump map supported!
+- Palette color index presrved during conversion
+- YUV420 encoding, Bump map and much more!
 
 
 ## ♥ Support ♥
@@ -50,8 +44,25 @@ Testing:
  - Sappharad
 
 ---
+## PyPVR Drag & Drop - Table of Contents
+a. [DECODE: PVR --> IMG](#1-decode-pvr----img)
+b. [ENCODE: IMG --> PVR](#3-encode-img----pvr)
+c. [EXTRACT CONTAINERS](#4-encode-options)
+d. [REIMPORT CONTAINERS](#4-encode-options)
 
-## PyPVR Table of Contents
+---
+
+## a. DECODE: PVR --> IMG
+
+## b. ENCODE: IMG --> PVR
+
+## c. EXTRACT CONTAINERS
+
+## d. REIMPORT CONTAINERS
+
+---
+
+## PyPVR Command Line Tool - Table of Contents
 1. [DECODE: PVR --> IMG](#1-decode-pvr----img)
 2. [DECODE OPTIONS](#2-decode-options)
 3. [ENCODE: IMG --> PVR](#3-encode-img----pvr)
