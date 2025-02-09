@@ -9,7 +9,8 @@ All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK
 
 Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender-NaomiLib), `PyPVR` is now a standalone tool designed for beginners / experienced modders.<p></p>
 Click on [Drag & Drop](https://github.com/VincentNLOBJ/PyPVR/tree/main?tab=readme-ov-file#pypvr-drag--drop---quick-steps) or [Command Line](https://github.com/VincentNLOBJ/PyPVR/tree/main?tab=readme-ov-file#pypvr-command-line-tool---table-of-contents) for usage examples.
-`PyPVR` can be also used by #developers for batch encoding or Python import for buffer input/output.
+
+`PyPVR` can be also used by developers for [Batch Encoding](https://github.com/VincentNLOBJ/PyPVR/edit/main/README.md#batch-encoding) or Python import for [buffer input/output](https://github.com/VincentNLOBJ/PyPVR/edit/main/README.md#python-buffer).
 
 ## Main Features
 - Pyhon 3.9.12+, OS free!  ( Modules: numpy, PIL, faiss )
@@ -228,7 +229,7 @@ pypvr.exe "c:\myfolder\"pvr_log.txt"
 # Developers Useage
 `PyPVR` can be used for batch Image --> `.PVR` / `.PVP` processing, by using a `.txt` file, or if used as Python import as buffer input/output.
 
-## Encoder
+## Batch Encoding
 - `PyPVR` encoder accepts `.png`, `.gif`, `.bmp`, `.tga`, `.jpg`, `.tif` images.
 If you want to create your own build chain, make a text file called `pvr_log.txt` and feed it to `PyPVR`
 
