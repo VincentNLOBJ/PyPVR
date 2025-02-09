@@ -8,6 +8,11 @@
 All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK are supported.
 
 Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender-NaomiLib), `PyPVR` is now a standalone tool designed for beginners / experienced modders.<p></p>
+Thanks to Rob2d for K-means idea, the 2 VQ compression algorithms can provide quality encoding results.
+
+![PYPVR_VQMM](https://github.com/user-attachments/assets/fc5b2fcb-cebe-4c3e-b33b-89a7c3a0cc7d)
+
+
 Click on [Drag & Drop](#pypvr-drag--drop---quick-steps) or [Command Line](#pypvr-command-line-tool---table-of-contents) for usage examples.
 
 `PyPVR` can be also used by developers for [Batch Encoding](#batch-encoding) or Python import module for [Buffer Input/Output](#python-buffer).
