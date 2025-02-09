@@ -8,9 +8,9 @@
 All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK are supported.
 
 Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender-NaomiLib), `PyPVR` is now a standalone tool designed for beginners / experienced modders.<p></p>
-Click on [Drag & Drop](https://github.com/VincentNLOBJ/PyPVR/tree/main?tab=readme-ov-file#pypvr-drag--drop---quick-steps) or [Command Line](https://github.com/VincentNLOBJ/PyPVR/tree/main?tab=readme-ov-file#pypvr-command-line-tool---table-of-contents) for usage examples.
+Click on [Drag & Drop](#pypvr-drag--drop---quick-steps) or [Command Line](#pypvr-command-line-tool---table-of-contents) for usage examples.
 
-`PyPVR` can be also used by developers for [Batch Encoding](#batch-encoding) or Python import for [buffer input/output](https://github.com/VincentNLOBJ/PyPVR/tree/main/README.md#python-buffer).
+`PyPVR` can be also used by developers for [Batch Encoding](#batch-encoding) or Python import for [buffer input/output](#python-buffer).
 
 ## Main Features
 - Pyhon 3.9.12+, OS free!  ( Modules: numpy, PIL, faiss )
