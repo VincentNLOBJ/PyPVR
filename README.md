@@ -6,10 +6,9 @@
 
 `PyPVR` is a modern tool written in Python for encoding / decoding PowerVR2 images used by `SEGA Dreamcast` and `SEGA Naomi`.
 All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK are supported.
-Simple #PyPVR Drag & Drop - Quick Steps and #PyPVR Command Line Tool - Table of Contents integrated!
 
-
-Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender-NaomiLib), `PyPVR` is now a standalone tool designed for beginners / experienced modders.
+Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender-NaomiLib), `PyPVR` is now a standalone tool designed for beginners / experienced modders.<p></p>
+Click on [Drag & Drop](https://github.com/VincentNLOBJ/PyPVR/tree/main?tab=readme-ov-file#pypvr-drag--drop---quick-steps) or [Command Line](https://github.com/VincentNLOBJ/PyPVR/tree/main?tab=readme-ov-file#pypvr-command-line-tool---table-of-contents) for usage examples.
 
 ## Main Features
 - Pyhon 3.9.12+, OS free!  ( Modules: numpy, PIL, faiss )
@@ -87,7 +86,7 @@ pypvr.exe <infile1.PVR> -<options>
 - `-o <out_dir>`: Output directory
 - `-flip`: Flip vertically
 - `-silent`: No screen prints
-- `-log`: Create a `pvr_info.txt` for later re-import
+- `-nolog`: Do not create `pvr_info.txt` for later re-import
 - `-dbg`: Debug mode
 - `-usepal <pvp_file>`: Decode palettized image with colors from a pvp palette
 - `-act`: Convert PVP to ACT palette (Adobe Color Table)
@@ -169,9 +168,9 @@ pypvr.exe "file1.PVR"
 ```
 
 #### Example 2
-Convert all `.PVR` files to images, save in `c:\images`, create log file for reimport:
+Convert all `.PVR` files to images, save in `c:\images`:
 ```bash
-pypvr.exe "*.pvr" -o "c:\images" -log
+pypvr.exe "*.pvr" -o "c:\images"
 ```
 
 #### Example 3
