@@ -4,21 +4,22 @@
 
 # PyPVR - Unofficial PVR Image Tool
 
-`PyPVR` is a modern Python tool for encoding / decoding PowerVR2 images used by `SEGA Naomi` and `SEGA Dreamcast`.
+`PyPVR` is a modern tool written in Python for encoding / decoding PowerVR2 images used by `SEGA Dreamcast` and `SEGA Naomi`.
 All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK are supported.
+Simple #PyPVR Drag & Drop - Quick Steps and #PyPVR Command Line Tool - Table of Contents integrated!
 
-Originally written in pure Python 3.9 for Blender [NaomiLib addon](https://github.com/NaomiMod/blender-NaomiLib), it now includes all the features casual and experienced modders need, without relying on the old licensed SDK tools.
+
+Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender-NaomiLib), `PyPVR` is now a standalone tool designed for beginners / experienced modders.
 
 ## Main Features
-- Pyhon 3.9.12+, OS free!
+- Pyhon 3.9.12+, OS free!  ( Modules: numpy, PIL, faiss )
 - Portable Windows application
 - Drag & drop interface
 - Command line tool
-- Binary container `.afs`,`.bin`,`.dat`,`.pvm`,`.tex` extract / reimport `.PVR` / `.PVP`.
-- 2 VQ quality algorithms to provide a flexible solution according to your needs.
-- Palette color index presrved during conversion
-- YUV420 encoding, Bump map and much more!
-
+- Binary container (`.afs` `.bin` `.dat` `.pvm` `.tex`) extract / reimport 
+- 2 VQ quality algorithms
+- Palette color index preserved during conversion
+- YUV420 encoding, Bump map
 
 ## ♥ Support ♥
 - https://ko-fi.com/vincentnl
@@ -44,21 +45,16 @@ Testing:
  - Sappharad
 
 ---
-## PyPVR Drag & Drop - Table of Contents
-a. [DECODE: PVR --> IMG](#1-decode-pvr----img)
-b. [ENCODE: IMG --> PVR](#3-encode-img----pvr)
-c. [EXTRACT CONTAINERS](#4-encode-options)
-d. [REIMPORT CONTAINERS](#4-encode-options)
-
----
-
-## a. DECODE: PVR --> IMG
-
-## b. ENCODE: IMG --> PVR
-
-## c. EXTRACT CONTAINERS
-
-## d. REIMPORT CONTAINERS
+## PyPVR Drag & Drop - Quick Steps
+## Step 1 - Extraction:
+Drag files into `PyPVR` (container or `.PVR` / `.PVP`) 
+![extract container](https://github.com/user-attachments/assets/5c48710f-72e4-4d84-9b15-e3156f55262b)
+## Step 2 - Modify Images:
+Use your preferred software (Photoshop or Gimp recommended)
+![modify](https://github.com/user-attachments/assets/975dc05d-61f6-4e3b-925a-b196b3ccbb2a)
+## Step 3 - Reimport:
+Drag `pvr_log.txt` on `PyPVR`, for quick reimport of all images.
+![reimport container](https://github.com/user-attachments/assets/07097951-8fc3-4dbe-817a-293474b743e7)
 
 ---
 
