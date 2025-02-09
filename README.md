@@ -29,6 +29,7 @@ Click on [Drag & Drop](https://github.com/VincentNLOBJ/PyPVR/tree/main?tab=readm
  - Tcaw for K-means idea leading to quality VQ encoding
  - Egregiousguy for YUV420 decoding 
  - Kion for SmallVQ mipmaps data
+ - tvspelsfreak for SR conversion to normal map
  - MetalliC for hardware knowledge
  - My daughter for logo design! ♥
 
