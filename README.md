@@ -9,7 +9,7 @@ All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK
 
 Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender-NaomiLib), `PyPVR` is now a standalone tool designed for beginners / experienced modders.<p></p>
 Click on [Drag & Drop](https://github.com/VincentNLOBJ/PyPVR/tree/main?tab=readme-ov-file#pypvr-drag--drop---quick-steps) or [Command Line](https://github.com/VincentNLOBJ/PyPVR/tree/main?tab=readme-ov-file#pypvr-command-line-tool---table-of-contents) for usage examples.
-`PyPVR` can be also used by developers willing to create PVR variations used by SEGA's SDK formats.
+`PyPVR` can be also used by #developers for batch encoding or Python import for buffer input/output.
 
 ## Main Features
 - Pyhon 3.9.12+, OS free!  ( Modules: numpy, PIL, faiss )
@@ -225,7 +225,8 @@ Reimport modified images and palettes back to container using log file:
 ```bash
 pypvr.exe "c:\myfolder\"pvr_log.txt"
 ```
-# PyPVR Developers Use
+# Developers Useage
+`PyPVR` can be used for batch Image --> `.PVR` / `.PVP` processing, by using a `.txt` file, or if used as Python import as buffer input/output.
 
 ## Encoder
 - `PyPVR` encoder accepts `.png`, `.gif`, `.bmp`, `.tga`, `.jpg`, `.tif` images.
@@ -248,18 +249,21 @@ ENC PARAMS : -pal8 -1555 -nopvp
 ```
 
 ## Python buffer
-In case you want to decode / encode `.PVR` or `.PVP` as `bytesarray` buffer:
+Pypvr().Encode and Pypvr().Decode class, can be used with `bytesarray` as input / output.
 
-- If you want to use a physical file as input, encode bytes array as PVR buffer output:
+- Physical file as input, encode bytes array as buffer output:
 ```bash
 Pypvr().Encode(f' c:\filename.png -buffer').get_pvr_buffer()
 ```
-- If your PIL image object is already stored, encode bytes array as PVR buffer output:
+- PIL image object as input, encode bytes array as buffer output:
 ```bash
 Ppypvr().Encode('-buffer',image).get_pvr_buffer()
 ```
-- If you want to take the `.PVP` as buffer that's supported too:
+- Physical file's palette as input, convert to palette buffer output:
 ```bash
 Pypvr().Encode(f' c:\filename.png -buffer').get_pvp_buffer()
+```
+- PIL Image object's palette as input, palette buffer output:
+```bash
 Pypvr().Encode('-buffer',image).get_pvp_buffer()
 ```
