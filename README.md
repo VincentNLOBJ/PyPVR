@@ -264,19 +264,29 @@ ENC PARAMS : -pal8 -1555 -nopvp
 ## Python buffer
 If used as module import, `PyPVR` can provide `bytesarray` as input / output with `-buffer` option.
 
+### Image buffer (Decode)
+
+- pvr buffer input, pvp buffer input, decode to image buffer output:
+
+*Please note, internally it'll be converted into a .BMP with full alpha blending to simplify any further conversions.*
+```bash
+image_buffer = Pypvr.Decode(f'-buffer', buff_pvr = data , buff_pvp = palette ).get_image_buffer()
+```
+---
+### PVR / PVP buffer (Encode)
 - Physical file as input, encode bytes array as buffer output:
 ```bash
-Pypvr().Encode('c:\filename.png -buffer').get_pvr_buffer()
+pvr_buffer = Pypvr.Encode('c:\filename.png -buffer').get_pvr_buffer()
 ```
 - PIL image object as input, encode bytes array as buffer output:
 ```bash
-Pypvr().Encode('-buffer',image).get_pvr_buffer()
+pvr_buffer = Pypvr.Encode('-buffer',image).get_pvr_buffer()
 ```
 - Physical file's palette as input, convert to palette buffer output:
 ```bash
-Pypvr().Encode('c:\filename.png -buffer').get_pvp_buffer()
+pvp_buffer = Pypvr.Encode('c:\filename.png -buffer').get_pvp_buffer()
 ```
 - PIL Image object's palette as input, palette buffer output:
 ```bash
-Pypvr().Encode('-buffer',image).get_pvp_buffer()
+pvp_buffer = Pypvr.Encode('-buffer',image).get_pvp_buffer()
 ```
