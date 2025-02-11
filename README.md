@@ -245,7 +245,7 @@ Additionally, it can be used as an import module for encoding/decoding as `bytes
 ---
 
 ## Batch Encoding
-- `PyPVR` encoder accepts `.png`, `.gif`, `.bmp`, `.tga`, `.jpg`, `.tif` images.
+`PyPVR` encoder accepts `.png`, `.gif`, `.bmp`, `.tga`, `.jpg`, `.tif` images.
 If you want to create your own build chain, make a text file called `pvr_log.txt` and feed it to `PyPVR`
 
 Example `pvr_log.txt`:
@@ -262,6 +262,10 @@ ENC PARAMS : -pal8 -1555 -nopvp
 IMAGE FILE : C:\Image3.png
 TARGET DIR : C:\PVR
 ENC PARAMS : -pal8 -1555 -nopvp
+```
+- Encode it:
+```bash
+pypvr.py "pvr_log.txt"
 ```
 ---
 
