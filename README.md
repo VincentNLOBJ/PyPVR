@@ -253,15 +253,15 @@ If you want to create your own build chain, make a text file called `pvr_log.txt
 ```bash
 IMAGE FILE : C:\Image1.png
 TARGET DIR : C:\PVR
-ENC PARAMS : -vq -1555 -mm 
+ENC PARAMS : -vq -565 -mm 
 ---------------
 IMAGE FILE : C:\Image2.png
 TARGET DIR : C:\PVR
-ENC PARAMS : -pal8 -1555 -nopvp
+ENC PARAMS : -pal8 -1555 -mm
 ---------------
 IMAGE FILE : C:\Image3.png
 TARGET DIR : C:\PVR
-ENC PARAMS : -pal8 -1555 -nopvp
+ENC PARAMS : -pal8 -1555 -mm
 ```
 - Batch encode:
 ```bash
