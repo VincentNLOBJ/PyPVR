@@ -236,7 +236,9 @@ pypvr.exe "c:\myfolder\"pvr_log.txt"
 
 
 # Developers Usage
-`PyPVR` can be used for batch images encoding, by creating a simple `pvr_log.txt` file, or as `bytesarray` input/output when called as Python import module.
+`PyPVR` can process batch encoding of multiple images, by creating a simple `pvr_log.txt` file.
+
+Additionally, it can be used as an import module for encoding/decoding as `bytesarray` input/output.
 
 ---
 
