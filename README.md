@@ -274,13 +274,13 @@ If used as module import, `PyPVR` can provide `bytesarray` as input / output wit
 
 *Please note, internally it'll be converted into a .BMP with full alpha blending to simplify any further conversions.*
 ```bash
-image_buffer = Pypvr.Decode(f'-buffer', buff_pvr = data , buff_pvp = palette ).get_image_buffer()
+image_buffer = Pypvr.Decode('-buffer', buff_pvr = data , buff_pvp = palette ).get_image_buffer()
 ```
 ---
 ### Encode Image --> PVR / PVP buffer
-- Image file as input, pvr buffer output:
+- Image file as input, pvr buffer output, VQ compress:
 ```bash
-pvr_buffer = Pypvr.Encode('-buffer c:\filename.png').get_pvr_buffer()
+pvr_buffer = Pypvr.Encode('c:\filename.png -buffer -vq').get_pvr_buffer()
 ```
 - PIL image object as input, pvr buffer output:
 ```bash
@@ -288,7 +288,7 @@ pvr_buffer = Pypvr.Encode('-buffer',PILImage).get_pvr_buffer()
 ```
 - Image as palette input, palette pvp buffer output:
 ```bash
-pvp_buffer = Pypvr.Encode('-buffer c:\filename.png').get_pvp_buffer()
+pvp_buffer = Pypvr.Encode('c:\filename.png -buffer').get_pvp_buffer()
 ```
 - PIL Image object's palette as input, palette pvp buffer output:
 ```bash
