@@ -2,9 +2,10 @@
   <img src="https://github.com/user-attachments/assets/187425e7-e73a-4b8c-801b-ee2126db0e30">
 </p>
 
-# PyPVR - Unofficial PVR Image Tool
+# PyPVR - Python PVR Image Tool
 
 `PyPVR` is a modern tool written in Python for encoding / decoding PowerVR2 images used by `SEGA Dreamcast` and `SEGA Naomi`.
+Please note PyPVR is an unofficial tool, with no relation to SEGA, PowerVR or any thrid part involved in hardware / software development. 
 
 Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender-NaomiLib), `PyPVR` is now a standalone tool designed for beginners / experienced modders.<p></p>
 
@@ -248,7 +249,7 @@ Additionally, it can be used as an import module for encoding/decoding as `bytes
 - `PyPVR` encoder accepts `.png`, `.gif`, `.bmp`, `.tga`, `.jpg`, `.tif` images.
 If you want to create your own build chain, make a text file called `pvr_log.txt` and feed it to `PyPVR`
 
-Example:
+Example `pvr_log.txt`:
 
 ```bash
 IMAGE FILE : C:\Image1.png
