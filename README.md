@@ -248,7 +248,7 @@ Additionally, it can be used as an import module for encoding/decoding as `bytes
 `PyPVR` encoder accepts `.png`, `.gif`, `.bmp`, `.tga`, `.jpg`, `.tif` images.
 If you want to create your own build chain, make a text file called `pvr_log.txt` and feed it to `PyPVR`
 
-Example, manually create a `pvr_log.txt`:
+- Manually create a `pvr_log.txt`:
 
 ```bash
 IMAGE FILE : C:\Image1.png
