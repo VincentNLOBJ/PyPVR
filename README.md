@@ -154,6 +154,7 @@ pypvr.py <infile> -<options>
 
 ### <other options>
 - `-mm`: Generate Mipmaps
+- `-near`: Force nearest resampling for Mipmaps, default is Bilinear
 - `-flip`: Vertical image flip
 - `-cla`: Clean unused RGB from alpha channel
 - `-gi <n>`: Specify GBIX header value
