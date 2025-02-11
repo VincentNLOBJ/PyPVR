@@ -5,17 +5,19 @@
 # PyPVR - Unofficial PVR Image Tool
 
 `PyPVR` is a modern tool written in Python for encoding / decoding PowerVR2 images used by `SEGA Dreamcast` and `SEGA Naomi`.
-All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK are supported.
 
 Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender-NaomiLib), `PyPVR` is now a standalone tool designed for beginners / experienced modders.<p></p>
+
+- All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK are supported.
+
+- Click on [Drag & Drop](#pypvr-drag--drop---quick-steps) or [Command Line](#pypvr-command-line-tool---table-of-contents) for usage examples.
+
+- `PyPVR` can be also used by developers for [Batch Encoding](#batch-encoding) or Python import module for [Buffer Input/Output](#python-buffer).
+
 Thanks to Rob2d for K-means idea, the 2 VQ compression algorithms can provide quality encoding results.
 
 ![PYPVR_VQMM](https://github.com/user-attachments/assets/fc5b2fcb-cebe-4c3e-b33b-89a7c3a0cc7d)
 
-
-Click on [Drag & Drop](#pypvr-drag--drop---quick-steps) or [Command Line](#pypvr-command-line-tool---table-of-contents) for usage examples.
-
-`PyPVR` can be also used by developers for [Batch Encoding](#batch-encoding) or Python import module for [Buffer Input/Output](#python-buffer).
 
 ## Main Features
 - Pyhon 3.9.12+, OS free!  ( Modules: numpy, PIL, faiss )
@@ -84,7 +86,7 @@ If a `.PVP` and `.PVR` file with the same name are present, the palette will be 
 
 ### Usage:
 ```bash
-pypvr.exe <infile1.PVR> -<options>
+pypvr.py <infile1.PVR> -<options>
 ```
 
 ---
@@ -107,7 +109,7 @@ Encode an image to `.PVR` and `.PVP` if palettized.
 
 ### Usage:
 ```bash
-pypvr.exe <infile> -<options>
+pypvr.py <infile> -<options>
 ```
 
 ---
@@ -172,64 +174,64 @@ pypvr.exe <infile> -<options>
 #### Example 1
 Convert a PVR to default image format `.png`:
 ```bash
-pypvr.exe "file1.PVR"
+pypvr.py "file1.PVR"
 ```
 
 #### Example 2
 Convert all `.PVR` files to images, save in `c:\images`:
 ```bash
-pypvr.exe "*.pvr" -o "c:\images"
+pypvr.py "*.pvr" -o "c:\images"
 ```
 
 #### Example 3
 Convert a `.PVR` to image, Vertical flip, save in `c:\decoded` directory:
 ```bash
-pypvr.exe "infile1.PVR" -png -flip -o "c:\decoded"
+pypvr.py "infile1.PVR" -png -flip -o "c:\decoded"
 ```
 
 ### Convert Image to PVR
 #### Example 1
 Convert image to `.PVR`, default settings:
 ```bash
-pypvr.exe "test.png"
+pypvr.py "test.png"
 ```
 
 #### Example 2
 Automatically re-encode all images back to `.PVR` as per `pvr_log.txt`:
 ```bash
-pypvr.exe "c:\image_dir\pvr_log.txt"
+pypvr.py "c:\image_dir\pvr_log.txt"
 ```
 
 #### Example 3
 Convert all `.png` images to `.PVR`, save them to output folder `c:\pvr_dir`:
 ```bash
-pypvr.exe "*.png" -o "c:\pvr_dir"
+pypvr.py "*.png" -o "c:\pvr_dir"
 ```
 
 #### Example 4
 Convert image to 1555 twiddled, use Global Index 0:
 ```bash
-pypvr.exe "test.png" -1555 -tw -gi 0
+pypvr.py "test.png" -1555 -tw -gi 0
 ```
 
 #### Example 5
 Convert image to 565, VQ compress:
 ```bash
-pypvr.exe "test.png" -565 -vq
+pypvr.py "test.png" -565 -vq
 ```
 
 ### Binary Container Extraction
 #### Example 1
 Scan a binary file for `.PVR` / `.PVP` data:
 ```bash
-pypvr.exe "unknown.DAT"
+pypvr.py "unknown.DAT"
 ```
 
 ### Binary Container Rebuild
 #### Example 1
 Reimport modified images and palettes back to container using log file:
 ```bash
-pypvr.exe "c:\myfolder\"pvr_log.txt"
+pypvr.py "c:\myfolder\"pvr_log.txt"
 ```
 ---
 
