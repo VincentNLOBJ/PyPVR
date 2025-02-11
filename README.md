@@ -287,14 +287,15 @@ image_buffer = Pypvr.Decode('-buffer', buff_pvr = data , buff_pvp = palette ).ge
 ```bash
 pvr_buffer = Pypvr.Encode('c:\filename.png -buffer -vq').get_pvr_buffer()
 ```
-- PIL image object as input, pvr buffer output:
-```bash
-pvr_buffer = Pypvr.Encode('-buffer',PILImage).get_pvr_buffer()
-```
 - Image as palette input, palette pvp buffer output:
 ```bash
 pvp_buffer = Pypvr.Encode('c:\filename.png -buffer').get_pvp_buffer()
 ```
+- PIL image object as input, pvr buffer output:
+```bash
+pvr_buffer = Pypvr.Encode('-buffer',PILImage).get_pvr_buffer()
+```
+
 - PIL Image object's palette as input, palette pvp buffer output:
 ```bash
 pvp_buffer = Pypvr.Encode('-buffer',PILImage).get_pvp_buffer()
