@@ -30,6 +30,7 @@ Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender
  - Kion for SmallVQ mipmaps data
  - tvspelsfreak for SR conversion to normal map
  - MetalliC for hardware knowledge
+ - Claude for Numpy code refactoring and optimization
  - My daughter for logo design! ♥
 
 Testing:
