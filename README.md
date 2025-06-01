@@ -13,11 +13,15 @@ Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender
 - `PyPVR` can be also used by developers for [Batch Encoding](#batch-encoding) or Python import module for [Buffer Input/Output](#python-buffer).
 
 ## Main Features
-- Pyhon 3.9.12+ ( ```pip install PyPVR``` ) , Windows application
+- Pyhon 3.9.12+, Windows application
 - Drag & drop interface / Command line tool
 - All `PVR` / `PVP` formats and variations used by SEGA SDKs are supported.
 - VQ [high quality algorithms](https://github.com/user-attachments/assets/fc5b2fcb-cebe-4c3e-b33b-89a7c3a0cc7d) 
 - Binary container (`.afs` `.bin` `.dat` `.pvm` `.tex`) extract / reimport 
+
+## Download / Install
+- Windows executable: https://github.com/VincentNLOBJ/PyPVR/releases
+- Python Pip: ```pip install PyPVR```
 
 ## ♥ Support ♥
 - https://ko-fi.com/vincentnl
