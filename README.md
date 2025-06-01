@@ -8,16 +8,15 @@
 
 Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender-NaomiLib), `PyPVR` is now a standalone tool designed for modders and developers alike.<p></p>
 
-- All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK are supported.
-
 - Click on [Drag & Drop](#pypvr-drag--drop---quick-steps) or [Command Line](#pypvr-command-line-tool---table-of-contents) for usage examples.
 
 - `PyPVR` can be also used by developers for [Batch Encoding](#batch-encoding) or Python import module for [Buffer Input/Output](#python-buffer).
 
 ## Main Features
-- Pyhon 3.9.12+ ( pip install PyPVR ), Windows application
+- Pyhon 3.9.12+ ( ```pip install PyPVR``` ) , Windows application
 - Drag & drop interface / Command line tool
-- 2 VQ quality algorithms ![PYPVR_VQMM](https://github.com/user-attachments/assets/fc5b2fcb-cebe-4c3e-b33b-89a7c3a0cc7d)
+- All `PVR` / `PVP` formats and variations used by SEGA SDKs are supported.
+- VQ [high quality algorithms](https://github.com/user-attachments/assets/fc5b2fcb-cebe-4c3e-b33b-89a7c3a0cc7d) 
 - Binary container (`.afs` `.bin` `.dat` `.pvm` `.tex`) extract / reimport 
 
 ## ♥ Support ♥
@@ -262,30 +261,62 @@ pypvr.py "pvr_log.txt"
 ---
 
 ## Python buffer
-If used as module import, `PyPVR` can provide `bytesarray` as input / output with `-buffer` option.
+Decoding/encoding to PIL Image object buffers via `-buffer` parameter
 
-### Decode PVR --> Image buffer
+### Decode to PIL Image
 
-- pvr buffer input, pvp buffer input, decode to image buffer output:
+```python
+from pypvr import Pypvr
+from PIL import Image
 
-```bash
-image_buffer = Pypvr.Decode('-buffer', buff_pvr = data , buff_pvp = palette ).get_image_buffer()
+with open('test.pvr', 'rb') as file:
+    pvr_data = file.read()
+
+image_buffer = Pypvr.Decode('-buffer', buff_pvr=pvr_data).get_image_buffer()
 ```
----
-### Encode Image --> PVR / PVP buffer
-- PIL image object as input, pvr buffer output, VQ compress:
-```bash
-pvr_buffer = Pypvr.Encode('-buffer -vq',PILImage).get_pvr_buffer()
+
+### Decode with Palette (PVR + PVP)
+
+```python
+from pypvr import Pypvr
+from PIL import Image
+
+with open('test.pvr', 'rb') as file:
+    pvr_data = file.read()
+with open('palette.pvp', 'rb') as file:
+    pvp_data = file.read()
+
+image_buffer = Pypvr.Decode('-buffer', buff_pvr=pvr_data, buff_pvp=pvp_data).get_image_buffer()
 ```
-- PIL Image object's palette as input, palette pvp buffer output:
-```bash
-pvp_buffer = Pypvr.Encode('-buffer',PILImage).get_pvp_buffer()
+
+### Encode from PIL Image
+
+```python
+from pypvr import Pypvr
+from PIL import Image
+
+image = Image.open("test.png")
+pvr_buffer = Pypvr.Encode('-buffer -vq', image).get_pvr_buffer()
 ```
-- Image file as input, pvr buffer output:
-```bash
-pvr_buffer = Pypvr.Encode('c:\filename.png -buffer').get_pvr_buffer()
-```
-- Image as palette input, palette pvp buffer output:
-```bash
-pvp_buffer = Pypvr.Encode('c:\filename.png -buffer').get_pvp_buffer()
-```
+
+###  Other Encode Examples
+
+- Encode to VQ-compressed `.PVR`:  
+  ```python
+  pvr_buffer = Pypvr.Encode('-buffer -vq', image).get_pvr_buffer()
+  ```
+
+- Export palette as `.PVP`:  
+  ```python
+  pvp_buffer = Pypvr.Encode('-buffer', image).get_pvp_buffer()
+  ```
+
+- From file path (PNG) to `.PVR` buffer:  
+  ```python
+  pvr_buffer = Pypvr.Encode('c:\filename.png -buffer').get_pvr_buffer()
+  ```
+
+- From file path (PNG) to `.PVP` buffer:  
+  ```python
+  pvp_buffer = Pypvr.Encode('c:\filename.png -buffer').get_pvp_buffer()
+  ```
