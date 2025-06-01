@@ -6,7 +6,7 @@
 
 `PyPVR` is an unofficial, modern tool written in Python for encoding / decoding PowerVR2 images used by `SEGA Dreamcast` and `SEGA Naomi`.
 
-Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender-NaomiLib), `PyPVR` is now a standalone tool designed for beginners / experienced modders.<p></p>
+Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender-NaomiLib), `PyPVR` is now a standalone tool designed for modders and developers alike.<p></p>
 
 - All texture modes, pixel formats, palettes and PVR variations used by SEGA's SDK are supported.
 
@@ -14,20 +14,11 @@ Originally made for Blender [NaomiLib addon](https://github.com/NaomiMod/blender
 
 - `PyPVR` can be also used by developers for [Batch Encoding](#batch-encoding) or Python import module for [Buffer Input/Output](#python-buffer).
 
-Thanks to Rob2d for K-means idea, the 2 VQ compression algorithms can provide quality encoding results.
-
-![PYPVR_VQMM](https://github.com/user-attachments/assets/fc5b2fcb-cebe-4c3e-b33b-89a7c3a0cc7d)
-
-
 ## Main Features
-- Pyhon 3.9.12+, OS free!  ( Modules: numpy, PIL, faiss )
-- Portable Windows application
-- Drag & drop interface
-- Command line tool
+- Pyhon 3.9.12+ ( pip install PyPVR ), Windows application
+- Drag & drop interface / Command line tool
+- 2 VQ quality algorithms ![PYPVR_VQMM](https://github.com/user-attachments/assets/fc5b2fcb-cebe-4c3e-b33b-89a7c3a0cc7d)
 - Binary container (`.afs` `.bin` `.dat` `.pvm` `.tex`) extract / reimport 
-- 2 VQ quality algorithms
-- Palette color index preserved during conversion
-- YUV420 encoding, Bump map
 
 ## ♥ Support ♥
 - https://ko-fi.com/vincentnl
@@ -277,7 +268,6 @@ If used as module import, `PyPVR` can provide `bytesarray` as input / output wit
 
 - pvr buffer input, pvp buffer input, decode to image buffer output:
 
-*Please note, internally it'll be converted into a .BMP with full alpha blending to simplify any further conversions.*
 ```bash
 image_buffer = Pypvr.Decode('-buffer', buff_pvr = data , buff_pvp = palette ).get_image_buffer()
 ```
