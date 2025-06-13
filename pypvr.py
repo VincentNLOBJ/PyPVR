@@ -416,13 +416,14 @@ class Pypvr:
                             print(f"Error scanning file {cur_file}: {e}")
 
                     else:
-                        full_pvr_path = os.path.abspath(cur_file[:-4] + '.pvr')
+                        path_upper = cur_file.endswith(('PVP', 'PVR'))
+
+                        full_pvr_path = os.path.abspath(cur_file[:-4] + ('.PVR' if path_upper else '.pvr'))
 
                         if self.usepal:
-
                             full_pvp_path = os.path.abspath(self.usepal)
                         else:
-                            full_pvp_path = os.path.abspath(cur_file[:-4] + '.pvp')
+                            full_pvp_path = os.path.abspath(cur_file[:-4] + ('.PVP' if path_upper else '.pvr'))
 
                         # print the paths being checked
                         # if not self.silent: print(f"Processing file: {cur_file}")
@@ -615,7 +616,7 @@ class Pypvr:
             elif self.fmt == 'tga':
                 self.save_tga(file_name, data, bits, w, h, cmode, palette)
 
-            if not self.silent: print(fr"{self.out_dir}\{file_name[:-4]}.{self.fmt} --> DONE!")
+            if not self.silent: print(fr"{self.out_dir}/{file_name[:-4]}.{self.fmt} --> DONE!")
 
         def PIL_buffer(self, file_name, data, bits, w, h, cmode, palette=None):
 
@@ -698,7 +699,7 @@ class Pypvr:
                 self.crc_value = hex(zlib.crc32(tga_data)).upper()[2:]
 
             # save the TGA file
-            with open(fr'{self.out_dir}\{file_name[:-4]}.tga', "wb") as tga_file:
+            with open(fr'{self.out_dir}/{file_name[:-4]}.tga', "wb") as tga_file:
                 tga_file.write(tga_data)
 
         def save_bmp(self, file_name, data, bits, w, h, cmode, palette=None):
@@ -771,7 +772,7 @@ class Pypvr:
                 self.crc_value = hex(zlib.crc32(bmp_data)).upper()[2:]
 
             # save the BMP file
-            with open(fr'{self.out_dir}\{file_name[:-4]}.bmp', "wb") as bmp_file:
+            with open(fr'{self.out_dir}/{file_name[:-4]}.bmp', "wb") as bmp_file:
                 bmp_file.write(bmp_data)
 
 
@@ -851,7 +852,7 @@ class Pypvr:
             # write PNG signature
             png_data = b'\x89PNG\r\n\x1a\n'
 
-            with open(fr'{self.out_dir}\{file_name[:-4]}.png', "wb") as out:
+            with open(fr'{self.out_dir}/{file_name[:-4]}.png', "wb") as out:
 
                 # write IHDR chunk
                 ihdr_chunk = struct.pack('!I', w) + struct.pack('!I', h) + bytes([bits, color_type, 0, 0, 0])
@@ -1300,10 +1301,10 @@ class Pypvr:
                         )
 
                 else:
-                    print(f"{self.out_dir}\\{PVR_file} --> ERROR!  PVRT header not found!")
+                    print(f"{self.out_dir}/{PVR_file} --> ERROR!  PVRT header not found!")
 
             except Exception:
-                if not self.image_buffer: print(f'{self.out_dir}\\{PVR_file} --> ERROR!  ')
+                if not self.image_buffer: print(f'{self.out_dir}/{PVR_file} --> ERROR!  ')
 
         def load_pvp(self, PVP_file, act_buffer, file_name,pvp_buffer = None):
 
