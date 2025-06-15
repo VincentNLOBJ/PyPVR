@@ -247,8 +247,11 @@ class Pypvr:
                 out_dir_match = re.search(out_dir_pattern, args_str)
                 if out_dir_match:
                     self.out_dir = out_dir_match.group(1).strip()
+                    self.out_dir_specified = True
                     if not os.path.isabs(self.out_dir):
                         self.out_dir = os.path.abspath(self.out_dir)
+                else:
+                    self.out_dir_specified = False
 
                 if re.search(flip_pattern, args_str):
                     self.flip = True
@@ -271,11 +274,7 @@ class Pypvr:
                 if re.search(act_flag_pattern, args_str):
                     self.act_export = True
 
-            # if no output directory is specified, default to the directory of the first file
-            if not self.out_dir and self.files_lst:
-                self.out_dir = os.path.abspath(os.path.dirname(self.files_lst[0]))
-
-            # ensure the output directory exists
+            # ensure the output directory exists if specified
             if self.out_dir and not self.buffer_mode:
                 os.makedirs(self.out_dir, exist_ok=True)
 
@@ -293,20 +292,24 @@ class Pypvr:
                 print(f"NO PVP: {self.nopvp}")
                 print(f"ACT Export: {self.act_export}")
 
-
             if self.buffer_mode and self.buffer_pvr:
-
                 if self.buffer_pvp:
-                    act_buffer = self.load_pvp(None, bytearray(), None,self.buffer_pvp)
+                    act_buffer = self.load_pvp(None, bytearray(), None, self.buffer_pvp)
                 else:
                     act_buffer = bytearray()
 
-                self.load_pvr(None, True if self.buffer_pvp else False, act_buffer,None, self.buffer_pvr)
-
+                self.load_pvr(None, True if self.buffer_pvp else False, act_buffer, None, self.buffer_pvr)
             else:
                 for cur_file in self.files_lst:
-                    if not cur_file.lower().endswith(('pvp', 'pvr')):
+                    # store original out_dir
+                    original_out_dir = self.out_dir
 
+                    # if no output directory was specified, use the current file's directory
+                    if not self.out_dir_specified:
+                        self.out_dir = os.path.dirname(os.path.abspath(cur_file))
+                        os.makedirs(self.out_dir, exist_ok=True)
+
+                    if not cur_file.lower().endswith(('pvp', 'pvr')):
                         print(f"Scanning {cur_file}")
                         try:
                             with open(cur_file, "rb") as f:
@@ -331,7 +334,8 @@ class Pypvr:
                                     if self.debug: print(f"PVRT found at offset: {hex(offset)}")
 
                                     if offset + 4 < len(buffer):
-                                        filesize = int.from_bytes(buffer[offset + 4:offset + 8], byteorder='little') + 8
+                                        filesize = int.from_bytes(buffer[offset + 4:offset + 8],
+                                                                  byteorder='little') + 8
                                         remaining_bytes = len(buffer) - offset
 
                                         if filesize > remaining_bytes or filesize < 0x10:
@@ -340,7 +344,6 @@ class Pypvr:
                                         continue
 
                                     if offset + 11 < len(buffer):
-
                                         byte_a = buffer[offset + 0xA]
                                         byte_b = buffer[offset + 0xB]
                                         if byte_a != 0x00 or byte_b != 0x00:
@@ -349,7 +352,8 @@ class Pypvr:
                                         continue
 
                                     pvrt_offsets_sizes.append((offset, filesize))
-                                    unpack_dir = os.path.join(self.out_dir, os.path.basename(cur_file) + '_EXT', 'PVR')
+                                    unpack_dir = os.path.join(self.out_dir, os.path.basename(cur_file) + '_EXT',
+                                                              'PVR')
                                     os.makedirs(unpack_dir, exist_ok=True)
 
                                     full_pvr_path = os.path.join(unpack_dir, f"{str(pvri).zfill(3)}.pvr")
@@ -370,15 +374,15 @@ class Pypvr:
                                                   os.path.join(os.path.basename(cur_file) + '_EXT',
                                                                f"{str(pvri - 1).zfill(3)}.pvr"))
 
-
                                 # process PVPL matches
                                 for offset in pvpl_matches:
-                                    self.debug: print(f"PVPL found at offset: {hex(offset)}")
+                                    if self.debug: print(f"PVPL found at offset: {hex(offset)}")
 
                                     if offset + 0xE + 2 <= len(buffer):
                                         value = int.from_bytes(buffer[offset + 0xE:offset + 0xE + 2],
                                                                byteorder='little')
-                                        filesize = int.from_bytes(buffer[offset + 4:offset + 8], byteorder='little') + 8
+                                        filesize = int.from_bytes(buffer[offset + 4:offset + 8],
+                                                                  byteorder='little') + 8
 
                                         if value not in {0x10, 0x100}:
                                             continue
@@ -386,7 +390,8 @@ class Pypvr:
                                         continue
 
                                     pvpl_offsets_sizes.append((offset, filesize))
-                                    unpack_dir = os.path.join(self.out_dir, os.path.basename(cur_file) + '_EXT', 'PVP')
+                                    unpack_dir = os.path.join(self.out_dir, os.path.basename(cur_file) + '_EXT',
+                                                              'PVP')
                                     os.makedirs(unpack_dir, exist_ok=True)
 
                                     full_pvp_path = os.path.join(unpack_dir, f"{str(pvpi).zfill(3)}.pvp")
@@ -395,7 +400,6 @@ class Pypvr:
                                     with open(os.path.join(unpack_dir, f"{str(pvpi).zfill(3)}.pvp"), 'wb') as p:
                                         p.write(buffer[offset:offset + filesize])
                                         pvpi += 1
-
 
                                     act_buffer = bytearray()
 
@@ -408,7 +412,6 @@ class Pypvr:
                                     self.load_pvp(full_pvp_path, act_buffer, full_pvp_path)
 
                                 print(f"Finished extracting {cur_file}")
-
 
                         except FileNotFoundError:
                             print(f"File not found: {cur_file}")
@@ -423,17 +426,14 @@ class Pypvr:
                         if self.usepal:
                             full_pvp_path = os.path.abspath(self.usepal)
                         else:
-                            full_pvp_path = os.path.abspath(cur_file[:-4] + ('.PVP' if path_upper else '.pvr'))
+                            full_pvp_path = os.path.abspath(cur_file[:-4] + ('.PVP' if path_upper else '.pvp'))
 
-                        # print the paths being checked
-                        # if not self.silent: print(f"Processing file: {cur_file}")
                         if self.debug: print(f"Checking PVR file: {full_pvr_path}, PVP file: {full_pvp_path}")
 
                         # check if PVP or PVR file exists
                         pvp_exists = os.path.exists(full_pvp_path)
                         pvr_exists = os.path.exists(full_pvr_path)
 
-                        # debug statements for file existence
                         if self.debug: print(f"PVP exists: {pvp_exists}, PVR exists: {pvr_exists}")
 
                         apply_palette = True if (cur_file.lower().endswith(".pvp") and pvr_exists) or (
@@ -447,8 +447,14 @@ class Pypvr:
                         if pvr_exists:
                             self.load_pvr(full_pvr_path, apply_palette, act_buffer, os.path.basename(cur_file))
 
+                    # restore original out_dir if it was specified
+                    if self.out_dir_specified:
+                        self.out_dir = original_out_dir
+
                 if self.log and self.log_content != '':
-                    with open(os.path.join(self.out_dir, 'pvr_log.txt'), 'w') as l:
+                    log_dir = self.out_dir if self.out_dir_specified else os.path.dirname(
+                        os.path.abspath(self.files_lst[0])) if self.files_lst else '.'
+                    with open(os.path.join(log_dir, 'pvr_log.txt'), 'w') as l:
                         l.write(self.log_content)
 
         def get_image_buffer(self):
@@ -616,7 +622,7 @@ class Pypvr:
             elif self.fmt == 'tga':
                 self.save_tga(file_name, data, bits, w, h, cmode, palette)
 
-            if not self.silent: print(fr"{self.out_dir}/{file_name[:-4]}.{self.fmt} --> DONE!")
+            if not self.silent: print(f"{os.path.join(self.out_dir, file_name[:-3] + self.fmt)} --> DONE!")
 
         def PIL_buffer(self, file_name, data, bits, w, h, cmode, palette=None):
 
@@ -2806,7 +2812,7 @@ class Pypvr:
 
                 # process each file with check_file_type
                 for file in files_to_process:
-                    output_dir_for_file = output_dir or os.getcwd()
+                    output_dir_for_file = output_dir or os.path.dirname(file)
                     self.check_file_type(file, output_dir_for_file, additional_args, decode_files)
 
                 # process all decode files together
