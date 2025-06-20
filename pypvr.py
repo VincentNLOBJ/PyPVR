@@ -62,37 +62,37 @@ Testing:
 
 class Pypvr:
     px_modes = {
-        0: '1555',  # ARGB1555
-        1: '565',  # RGB565
-        2: '4444',  # ARGB4444
-        3: 'yuv422',  # YUV422
-        4: 'bump',  # SR Height map
-        5: '555',  # RGB555 - PCX only
-        6: 'yuv420',  # YUV420 - same as .SAN format
-        7: '8888',  # RGBA8888
+        0: '1555',   # ARGB1555
+        1: '565',    # RGB565
+        2: '4444',   # ARGB4444
+        3: 'yuv422', # YUV422
+        4: 'bump',   # SR Height map
+        5: '555',    # RGB555 - PCX only
+        6: 'yuv420', # YUV420 - same as .SAN format
+        7: '8888',   # RGBA8888
         8: 'p4bpp',  # Placeholder 4bpp, pixel format in .PVP file
         9: 'p8bpp',  # Placeholder 8bpp, pixel format in .PVP file
     }
 
     tex_modes = {
-        1: 'tw',  # Twiddled
-        2: 'tw mm',  # Twiddled Mips
-        3: 'vq',  # VQ
-        4: 'vq mm',  # VQ Mips
-        5: 'pal4',  # Palette4
-        6: 'pal4 mm',  # Palette4 Mips
-        7: 'pal8',  # Palette8
-        8: 'pal8 mm',  # Palette8 Mips
-        9: 're',  # Rectangle
+        1: 'tw',      # Twiddled
+        2: 'tw mm',   # Twiddled Mips
+        3: 'vq',      # VQ
+        4: 'vq mm',   # VQ Mips
+        5: 'pal4',    # Palette4
+        6: 'pal4 mm', # Palette4 Mips
+        7: 'pal8',    # Palette8
+        8: 'pal8 mm', # Palette8 Mips
+        9: 're',      # Rectangle
         10: 're mm',  # Reserved - Rectangle can't be mipmapped
-        11: 'st',  # Stride
+        11: 'st',     # Stride
         12: 'st mm',  # Reserved - Stride can't be mipmapped, using "re mm"
-        13: 'twre',  # Twiddled Rectangle
-        14: 'bmp',  # Bitmap
-        15: 'bmp mm',  # Bitmap Mips
-        16: 'svq',  # SmallVQ
-        17: 'svq mm',  # SmallVQ Mips
-        18: 'twal mm'  # Twiddled Alias Mips
+        13: 'twre',   # Twiddled Rectangle
+        14: 'bmp',    # Bitmap
+        15: 'bmp mm', # Bitmap Mips
+        16: 'svq',    # SmallVQ
+        17: 'svq mm', # SmallVQ Mips
+        18: 'twal mm' # Twiddled Alias Mips
     }
 
     # common twiddle table, there might be better methods but it's fast.
@@ -208,12 +208,29 @@ class Pypvr:
             self.nopvp = False
             self.usepal = None
             self.act_export = False
-
             self.buffer_pvr = buff_pvr
             self.buffer_pvp = buff_pvp
             self.image_buffer = None
 
+            self.scandir = None
+            self.scandir_mode = False
+            self.scandir_base = None
+            self.scandir_out_base = None
+
             if args_str:
+
+                # extract output directory before anything else
+                out_dir_pattern = r'-o\s+(?:"([^"]+)"|([^\s-]+(?:\\\S*)?[^\s-]*))'
+                out_dir_match = re.search(out_dir_pattern, args_str)
+                if out_dir_match:
+                    # quoted or unquoted
+                    self.out_dir = (out_dir_match.group(1) or out_dir_match.group(2)).strip()
+                    self.out_dir_specified = True
+                    if not os.path.isabs(self.out_dir):
+                        self.out_dir = os.path.abspath(self.out_dir)
+                else:
+                    self.out_dir_specified = False
+
                 # first, check for usepal before processing any other files
                 usepal_pattern = r'-usepal\s+"?([^\s"]+\.pvp)"?|"?([^\s"]+\.pvp)"?'
                 usepal_match = re.search(usepal_pattern, args_str)
@@ -222,10 +239,17 @@ class Pypvr:
                     # remove the -usepal argument and its value from args_str
                     args_str = re.sub(r'-usepal\s+"?[^\s"]+\.pvp"?\s*', '', args_str)
 
+                # check for scandir before processing other files
+                scandir_pattern = r'-scandir\s+"?([^"\s]+(?:\s+[^"\s]+)*)"?'
+                scandir_match = re.search(scandir_pattern, args_str)
+                if scandir_match:
+                    self.scandir = scandir_match.group(1).strip()
+                    # remove -scandir from args_str
+                    args_str = re.sub(r'-scandir\s+"?[^"\s]+(?:\s+[^"\s]+)*"?\s*', '', args_str)
+
                 # all other patterns
                 file_pattern = r'"([^"]+\.(?:pvr|pvp|dat|bin|pvm|tex|mun))"|([^\s]+\.(?:pvr|pvp|dat|bin|pvm|tex|mun))'
                 fmt_pattern = r'-fmt\s+(\w+)'
-                out_dir_pattern = r'-o\s+"?([^"\s]+(?:\s+[^"\s]+)*)"?'
                 flip_pattern = r'-flip'
                 silent_flag_pattern = r'-silent'
                 nolog_flag_pattern = r'-nolog'
@@ -243,15 +267,6 @@ class Pypvr:
                 fmt_match = re.search(fmt_pattern, args_str)
                 if fmt_match:
                     self.fmt = fmt_match.group(1)
-
-                out_dir_match = re.search(out_dir_pattern, args_str)
-                if out_dir_match:
-                    self.out_dir = out_dir_match.group(1).strip()
-                    self.out_dir_specified = True
-                    if not os.path.isabs(self.out_dir):
-                        self.out_dir = os.path.abspath(self.out_dir)
-                else:
-                    self.out_dir_specified = False
 
                 if re.search(flip_pattern, args_str):
                     self.flip = True
@@ -274,6 +289,35 @@ class Pypvr:
                 if re.search(act_flag_pattern, args_str):
                     self.act_export = True
 
+            if self.scandir:
+                if not os.path.isdir(self.scandir):
+                    print(f"Error: '{self.scandir}' is not a valid directory!")
+                    return
+
+                # find all files recursively in the directory
+                scanned_files = self.scan_dir_contents(self.scandir)
+                if scanned_files:
+                    self.files_lst.extend(scanned_files)
+                    # scandir mode for output
+                    self.scandir_mode = True
+                    self.scandir_base = os.path.abspath(self.scandir)
+
+                    # if output directory is specified, create the _ext structure
+                    if self.out_dir_specified:
+                        scandir_name = os.path.basename(self.scandir_base)
+                        self.scandir_out_base = os.path.join(self.out_dir, scandir_name + '_ext')
+                    else:
+                        self.scandir_out_base = self.scandir_base + '_ext'
+
+                    if not self.silent:
+                        print(f"Found {len(scanned_files)} files to process in '{self.scandir}'")
+                        if self.debug:
+                            print(f"Scandir base: {self.scandir_base}")
+                            print(f"Scandir output base: {self.scandir_out_base}")
+                else:
+                    if not self.silent:
+                        print(f"No supported files found in '{self.scandir}'")
+
             # ensure the output directory exists if specified
             if self.out_dir and not self.buffer_mode:
                 os.makedirs(self.out_dir, exist_ok=True)
@@ -291,6 +335,7 @@ class Pypvr:
                 print(f"USE PVP: {self.usepal}")
                 print(f"NO PVP: {self.nopvp}")
                 print(f"ACT Export: {self.act_export}")
+                print(f"Scan Directory: {self.scandir}")
 
             if self.buffer_mode and self.buffer_pvr:
                 if self.buffer_pvp:
@@ -304,8 +349,30 @@ class Pypvr:
                     # store original out_dir
                     original_out_dir = self.out_dir
 
-                    # if no output directory was specified, use the current file's directory
-                    if not self.out_dir_specified:
+                    # scandir mode output
+                    if hasattr(self, 'scandir_mode') and self.scandir_mode:
+                        # rel path from scandir base
+                        rel_path = os.path.relpath(os.path.dirname(cur_file), self.scandir_base)
+
+                        if rel_path == '.':
+                            # root dir
+                            self.out_dir = self.scandir_out_base
+
+                        else:
+                            # subdir
+                            self.out_dir = os.path.join(self.scandir_out_base, rel_path)
+
+                        # ensure the output directory exists
+                        os.makedirs(self.out_dir, exist_ok=True)
+
+                        if self.debug:
+                            print(f"Processing: {cur_file}")
+                            print(f"Relative path: {rel_path}")
+                            print(f"Output dir: {self.out_dir}")
+                            print(f"Scandir out base: {self.scandir_out_base}")
+
+                    # if no output directory was specified and not in scandir mode, use the current file's directory
+                    elif not self.out_dir_specified:
                         self.out_dir = os.path.dirname(os.path.abspath(cur_file))
                         os.makedirs(self.out_dir, exist_ok=True)
 
@@ -452,14 +519,39 @@ class Pypvr:
                         self.out_dir = original_out_dir
 
                 if self.log and self.log_content != '':
-                    log_dir = self.out_dir if self.out_dir_specified else os.path.dirname(
-                        os.path.abspath(self.files_lst[0])) if self.files_lst else '.'
+                    # log file placement for scandir mode
+                    if hasattr(self, 'scandir_mode') and self.scandir_mode:
+                        # log file in the base scandir output directory
+                        log_dir = self.scandir_out_base
+                        os.makedirs(log_dir, exist_ok=True)
+                    else:
+                        log_dir = self.out_dir if self.out_dir_specified else os.path.dirname(
+                            os.path.abspath(self.files_lst[0])) if self.files_lst else '.'
+
                     with open(os.path.join(log_dir, 'pvr_log.txt'), 'w') as l:
                         l.write(self.log_content)
 
+        # scan directory recursively for supported files
+        def scan_dir_contents(self, directory):
+            supported_extensions = ('.pvr', '.pvp', '.dat', '.bin', '.pvm', '.tex', '.mun')
+            found_files = []
+
+            try:
+                for root, dirs, files in os.walk(directory):
+                    for file in files:
+                        if file.lower().endswith(supported_extensions):
+                            full_path = os.path.join(root, file)
+                            found_files.append(full_path)
+                            if self.debug:
+                                print(f"Found: {full_path}")
+
+            except Exception as e:
+                print(f"Error scanning directory '{directory}': {e}")
+
+            return found_files
+
         def get_image_buffer(self):
             return self.image_buffer
-
 
         def read_col(self, px_format, color):
 
@@ -2795,15 +2887,44 @@ class Pypvr:
                         else:
                             print("Error: No output directory specified after '-o'.")
                             sys.exit(1)
+                    elif args[i] == '-scandir':
+                        if i + 1 < len(args) and not args[i + 1].startswith('-'):
+                            scan_directory = args[i + 1]
+
+                            all_additional_args = []
+
+                            # add scandir arg
+                            all_additional_args.extend([args[i], f'"{scan_directory}"'])
+
+                            # any arguments after scandir
+                            j = i + 2
+                            while j < len(args):
+                                all_additional_args.append(args[j])
+                                j += 1
+
+                            # arguments that came before scandir
+                            all_additional_args.extend(additional_args)
+
+                            Pypvr.Decode(' '.join(all_additional_args))
+                            return
+                        else:
+                            print("Error: No directory specified after '-scandir'.")
+                            sys.exit(1)
                     elif args[i].startswith('-'):  # command-line options
                         additional_args.append(args[i])
                         if i + 1 < len(args) and not args[i + 1].startswith('-'):
                             additional_args.append(args[i + 1])
                             i += 1
                     else:
-                        # expand wildcard patterns
-                        matched_files = self.list_files_with_extensions(args[i])
-                        files_to_process.extend(matched_files)
+                        # drag and drop folder
+                        if os.path.isdir(args[i]):
+                            scan_args = ['-scandir', f'"{args[i]}"'] + additional_args
+                            Pypvr.Decode(' '.join(scan_args))
+                            return
+                        else:
+                            # expand wildcard patterns
+                            matched_files = self.list_files_with_extensions(args[i])
+                            files_to_process.extend(matched_files)
                     i += 1
 
                 if not files_to_process:
@@ -2817,7 +2938,6 @@ class Pypvr:
 
                 # process all decode files together
                 if decode_files:
-
                     quoted_decode_files = [f'"{file}"' for file in decode_files]
                     combined_args = quoted_decode_files + additional_args
 
@@ -2917,6 +3037,7 @@ class Pypvr:
             print('    usepal <pvp_file>   # Decode palettized image with colors from a pvp palette')
             print('    act                 # Convert PVP to ACT palette (Adobe Color Table)')
             print('    nopvp               # Do not extract pvp')
+            print('    scandir <directory> # Recursively scan directory for all supported files')  # NEW
             print()
             print()
             print('   ----------------------')
@@ -2991,11 +3112,22 @@ class Pypvr:
             print('  Example 1 - Convert a PVR to default image format (.png):')
             print('    > pypvr.exe "file1.PVR"')
             print()
-            print('  Example 2 - Convert all .PVR files to images, save in "c:\\images", create log file for reimport :')
+            print(
+                '  Example 2 - Convert all .PVR files to images, save in "c:\\images", create log file for reimport :')
             print('    > pypvr.exe "*.pvr" -o "c:\\images"')
             print()
             print('  Example 3 - Convert a PVR to image, Vertical flip, save in "c:\\decoded" directory:')
             print('    > pypvr.exe "infile1.PVR" -png -flip -o "c:\\decoded"')
+            print()
+            print('  Example 4 - Recursively scan directory for all supported files:')
+            print('    > pypvr.exe -scandir "c:\\game_textures"')
+            print()
+            print('  Example 5 - Drag and drop a folder to scan recursively:')
+            print('    > pypvr.exe "c:\\game_textures"')
+            print()
+            print('  Example 6 - Scan directory with custom output folder:')
+            print('    > pypvr.exe -scandir "scene" -o "zzz\\sbulo"')
+            print('    # Output: Files extracted to zzz\\sbulo\\scene_ext\\')
             print()
             print()
             print('        ----------------------')
@@ -3025,6 +3157,12 @@ class Pypvr:
             print('  Example 1 - Scan a binary file for PVR / PVP data')
             print('    > pypvr.exe "unknown.DAT"')
             print()
+            print('  Example 2 - Recursively scan directory for containers and decode:')
+            print('    > pypvr.exe -scandir "c:\\game_files"')
+            print()
+            print('  Example 3 - Scan directory to specified folder:')
+            print('    > pypvr.exe -scandir "c:\\game_files" -o "c:\\extracted"')
+            print()
             print()
             print('        --------------------------')
             print('  ---- | BINARY CONTAINER REBUILD |')
@@ -3034,6 +3172,7 @@ class Pypvr:
             print('    > pypvr.exe "c:\\myfolder\\"pvr_log.txt"')
             print()
             print()
+
 
 if __name__ == "__main__":
     Pypvr.Cli()
