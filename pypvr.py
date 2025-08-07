@@ -2947,7 +2947,7 @@ class Pypvr:
             else:
                 # print help/usage information if no arguments
                 print('      ____        ____ _    ______')
-                print('     / __ \\__  __/ __ \\ |  / / __ \\   V.1.0')
+                print('     / __ \\__  __/ __ \\ |  / / __ \\   V.1.1')
                 print('    / /_/ / / / / /_/ / | / / /_/ /')
                 print('   / ____/ /_/ / ____/| |/ / _, _/ ')
                 print('  /_/    \\__, /_/     |___/_/ |_|  ')
