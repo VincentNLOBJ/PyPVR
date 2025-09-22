@@ -9,6 +9,7 @@ import struct
 import zlib
 import fnmatch
 from PIL import Image
+from typing import List, Tuple
 
 '''
 MIT License
@@ -880,12 +881,12 @@ class Pypvr:
             # print(cmode)
 
             if cmode == 'RGB':
-                Pixel = tuple[int, int, int]
+                Pixel = Tuple[int, int, int]
 
             elif cmode == 'RGBA':
-                Pixel = tuple[int, int, int, int]
+                Pixel = Tuple[int, int, int, int]
 
-            def encode_data(image_data: list[list[Pixel]]) -> list[int]:
+            def encode_data(image_data: List[List[Pixel]]) -> List[int]:
                 ret = []
 
                 for row in image_data:
@@ -2947,7 +2948,7 @@ class Pypvr:
             else:
                 # print help/usage information if no arguments
                 print('      ____        ____ _    ______')
-                print('     / __ \\__  __/ __ \\ |  / / __ \\   V.1.1')
+                print('     / __ \\__  __/ __ \\ |  / / __ \\   V.1.2')
                 print('    / /_/ / / / / /_/ / | / / /_/ /')
                 print('   / ____/ /_/ / ____/| |/ / _, _/ ')
                 print('  /_/    \\__, /_/     |___/_/ |_|  ')
